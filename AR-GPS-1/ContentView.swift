@@ -14,13 +14,11 @@ struct ContentView : View {
         ARViewContainer().edgesIgnoringSafeArea(.all)
     }
 }
-//ARViewをswiftに変換している
+
 struct ARViewContainer: UIViewRepresentable {
     
-    
-    
     func makeUIView(context: Context) -> ARView {
-        //configを設定
+        
         let arView = ARView(frame: .zero)
         let session = arView.session
         let config = ARGeoTrackingConfiguration()
@@ -29,7 +27,7 @@ struct ARViewContainer: UIViewRepresentable {
         
         //ARの処理をcoordinatorで行うのでcoordinatorに情報を渡します
         context.coordinator.arView = arView
-        //ARView＋ExtensionファイルからCoachingOvelayViewをarviewに追加する関数を呼ぶ
+        //arviewにCoachingOvelayViewを追加する（setUpCoachingOverLay() はARView+Extensionファイルにあります）
         arView.setupCoachingOverlay(context.coordinator)
         
         return arView
@@ -37,14 +35,11 @@ struct ARViewContainer: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: ARView, context: Context) {}
-    
+    //Coordinatorを作成
     func makeCoordinator() -> Coordinator {
         Coordinator()
     }
 
-    
-    
-    
     
 }
 

@@ -34,7 +34,7 @@ class Coordinator: NSObject, CLLocationManagerDelegate ,ARCoachingOverlayViewDel
     }
     
     func coachingOverlayViewDidDeactivate(_ coachingOverlayView: ARCoachingOverlayView) {
-        //put entity using corelocation
+        //put entity using latitude and longtitude
         let coordinate = CLLocationCoordinate2D(latitude: 35.58800969819105, longitude:139.7042739537916)
         let geoAnchor = ARGeoAnchor(coordinate: coordinate)
         let anchorEntity = AnchorEntity(anchor: geoAnchor)
