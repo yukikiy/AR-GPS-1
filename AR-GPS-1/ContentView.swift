@@ -7,30 +7,44 @@
 
 import SwiftUI
 import RealityKit
+import ARKit
 
 struct ContentView : View {
     var body: some View {
         ARViewContainer().edgesIgnoringSafeArea(.all)
     }
 }
-
+//ARViewをswiftに変換している
 struct ARViewContainer: UIViewRepresentable {
     
+    
+    
     func makeUIView(context: Context) -> ARView {
-        
+        //configを設定
         let arView = ARView(frame: .zero)
+        let session = arView.session
+        let config = ARGeoTrackingConfiguration()
+        config.planeDetection = .horizontal
+        session.run(config)
         
-        // Load the "Box" scene from the "Experience" Reality File
-        let boxAnchor = try! Experience.loadBox()
-        
-        // Add the box anchor to the scene
-        arView.scene.anchors.append(boxAnchor)
+        //ARの処理をcoordinatorで行うのでcoordinatorに情報を渡します
+        context.coordinator.arView = arView
+        //ARView＋ExtensionファイルからCoachingOvelayViewをarviewに追加する関数を呼ぶ
+        arView.setupCoachingOverlay(context.coordinator)
         
         return arView
         
     }
     
     func updateUIView(_ uiView: ARView, context: Context) {}
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+
+    
+    
+    
     
 }
 
